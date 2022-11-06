@@ -1,0 +1,28 @@
+from google.colab import drive
+drive.mount('/content/drive')
+
+#!ls "/content/drive/My Drive/Kaggle_dataset/HR_analytics/PA-I_Case_Study_HR_Analytics"
+
+!cp "/content/drive/My Drive/Kaggle_dataset/HR_analytics/PA-I_Case_Study_HR_Analytics/general_data.csv" "general_data.csv"
+!cp "/content/drive/My Drive/Kaggle_dataset/HR_analytics/PA-I_Case_Study_HR_Analytics/employee_survey_data.csv" "employee_survey_data.csv"
+!cp "/content/drive/My Drive/Kaggle_dataset/HR_analytics/PA-I_Case_Study_HR_Analytics/manager_survey_data.csv" "manager_survey_data.csv"
+!cp "/content/drive/My Drive/Kaggle_dataset/HR_analytics/PA-I_Case_Study_HR_Analytics/in_time.csv" "in_time.csv"
+!cp "/content/drive/My Drive/Kaggle_dataset/HR_analytics/PA-I_Case_Study_HR_Analytics/out_time.csv" "out_time.csv"
+Drive already mounted at /content/drive; to attempt to forcibly remount, call drive.mount("/content/drive", force_remount=True).
+generalData_df      =  pd.read_csv("general_data.csv")
+employee_survey_df  =  pd.read_csv("employee_survey_data.csv")
+manager_survey_df   =  pd.read_csv("manager_survey_data.csv")
+intime_df           =  pd.read_csv("in_time.csv")
+outtime_df          =  pd.read_csv("out_time.csv")
+print(generalData_df.shape ,  employee_survey_df.shape ,  manager_survey_df.shape)
+print(employee_survey_df.columns.tolist())
+print(manager_survey_df.columns.tolist())
+(4410, 24) (4410, 4) (4410, 3)
+['EmployeeID', 'EnvironmentSatisfaction', 'JobSatisfaction', 'WorkLifeBalance']
+['EmployeeID', 'JobInvolvement', 'PerformanceRating']
+df1=pd.merge(generalData_df,employee_survey_df,on='EmployeeID')
+final_df=pd.merge(df1,manager_survey_df,on='EmployeeID')
+
+if(len(final_df.columns.tolist())   == (len(generalData_df.columns.tolist()) + len(employee_survey_df.columns.tolist()) + len(manager_survey_df.columns.tolist())) - 2):
+  print("OK")
+  
